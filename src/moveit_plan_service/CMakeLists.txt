@@ -8,12 +8,14 @@ project(moveit_plan_service)
 ## if COMPONENTS list like find_package(catkin REQUIRED COMPONENTS xyz)
 ## is used, also find other catkin packages
 find_package(catkin REQUIRED COMPONENTS
-  message_generation
-  gemometry_msgs
+  geometry_msgs
   moveit_ros_planning_interface
   roscpp
   rospy
   std_msgs
+  message_generation
+  tf
+  std_srvs
 )
 
 ## System dependencies are found with CMake's conventions
@@ -57,8 +59,9 @@ find_package(catkin REQUIRED COMPONENTS
 # )
 
 ## Generate services in the 'srv' folder
-add_service_files(FILES
-  CartesienArmPlan.srv
+add_service_files(
+  FILES
+  CartesianArmPlan.srv
 )
 
 ## Generate actions in the 'action' folder
@@ -69,7 +72,9 @@ add_service_files(FILES
 # )
 
 ## Generate added messages and services with any dependencies listed here
-generate_messages(DEPENDENCIES
+generate_messages(
+  DEPENDENCIES
+  geometry_msgs#   std_msgs
   std_msgs
 )
 
@@ -103,11 +108,9 @@ generate_messages(DEPENDENCIES
 ## CATKIN_DEPENDS: catkin_packages dependent projects also need
 ## DEPENDS: system dependencies of this project that dependent projects also need
 catkin_package(
-  CATKIN_DEPENDS
-  message_runtime
 #  INCLUDE_DIRS include
 #  LIBRARIES moveit_plan_service
-#  CATKIN_DEPENDS gemometry_msgs moveit_ros_planning_interface roscpp rospy std_msgs
+#  CATKIN_DEPENDS geometry_msgs moveit_ros_planning_interface roscpp rospy std_msgs
 #  DEPENDS system_lib
 )
 
@@ -201,10 +204,11 @@ include_directories(
 ## Add folders to be run by python nosetests
 # catkin_add_nosetests(test)
 
-add_executable(CartesianArmPlanServer
+
+add_executable(cartesian_arm_plan_server
   src/cartesian_plan_server.cpp
 )
-add_dependencies(CartesianArmPlanServer ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
-target_link_libraries(CartesianArmPlanServer
+add_dependencies(cartesian_arm_plan_server ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
+target_link_libraries(cartesian_arm_plan_server
   ${catkin_LIBRARIES}
 )
