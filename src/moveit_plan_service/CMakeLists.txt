@@ -212,3 +212,11 @@ add_dependencies(cartesian_arm_plan_server ${${PROJECT_NAME}_EXPORTED_TARGETS} $
 target_link_libraries(cartesian_arm_plan_server
   ${catkin_LIBRARIES}
 )
+
+add_executable(test_cartisen_plan
+  src/test_cartisen_plan.cpp
+)
+add_dependencies(test_cartisen_plan ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
+target_link_libraries(test_cartisen_plan
+  ${catkin_LIBRARIES}
+)

@@ -20,6 +20,15 @@ bool cartesianPlan(moveit_plan_service::CartesianArmPlan::Request  &req,
   geometry_msgs::PoseStamped goal_pose;
   goal_pose = req.goal_pose;
 
+  // goal_pose.header.frame_id = "base_footprint";
+  // goal_pose.pose.position.x = 0.4;
+  // goal_pose.pose.position.y = -0.3;
+  // goal_pose.pose.position.z = 0.26;
+  // goal_pose.pose.orientation.w = 1;
+  // goal_pose.pose.orientation.x = 0;
+  // goal_pose.pose.orientation.y = 0;
+  // goal_pose.pose.orientation.z = 0;
+
 
   std::vector<std::string> torso_arm_joint_names;
   //select group of joints
@@ -39,10 +48,10 @@ bool cartesianPlan(moveit_plan_service::CartesianArmPlan::Request  &req,
 
   moveit::planning_interface::MoveGroup::Plan my_plan;
   //set maximum time to find a plan
-  group_arm_torso.setPlanningTime(10.0);
-  ROS_INFO("Begain plan in 5 seconds later...");
-  ros::Duration(5).sleep();
+  group_arm_torso.setPlanningTime(5.0);
+  // ros::Duration(5).sleep();
   bool success = group_arm_torso.plan(my_plan);
+  ROS_INFO("Plan found....");
   res.success = success;
 
   if ( !success )
@@ -53,8 +62,8 @@ bool cartesianPlan(moveit_plan_service::CartesianArmPlan::Request  &req,
   // Execute the plan
   ros::Time start = ros::Time::now();
 
-
   moveit::planning_interface::MoveItErrorCode e = group_arm_torso.move();
+  
   if (!bool(e))
     throw std::runtime_error("Error executing plan");
 
@@ -67,10 +76,15 @@ int main(int argc, char **argv)
 {
   ros::init(argc, argv, "cartesian_arm_plan_server");
   ros::NodeHandle n;
-
+  ros::Rate rate(1);
+  ros::AsyncSpinner spinner(1);
+  spinner.start();
   ros::ServiceServer service = n.advertiseService("cartesian_arm_plan", cartesianPlan);
   ROS_INFO("Ready to plan using trac-ik package in cartesian space.");
-  ros::spin();
 
+  while(ros::ok())
+  {
+    rate.sleep();
+  }
   return 0;
 }
