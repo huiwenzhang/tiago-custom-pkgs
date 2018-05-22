@@ -37,7 +37,7 @@ if __name__ == "__main__":
         pose.header.frame_id = 'base_footprint'
         pose.pose.position.x = 0.45
         pose.pose.position.y = -0.3
-        pose.pose.position.z = 0.46
+        pose.pose.position.z = 0.76
         # quat = quaternion_from_euler(-0.011, 1.57, 0.037)
         # pose.pose.orientation.w = float(quat[0])
         # pose.pose.orientation.x = float(quat[1])

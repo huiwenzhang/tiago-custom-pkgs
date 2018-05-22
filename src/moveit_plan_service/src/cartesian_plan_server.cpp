@@ -49,7 +49,7 @@ bool cartesianPlan(moveit_plan_service::CartesianArmPlan::Request  &req,
   moveit::planning_interface::MoveGroup::Plan my_plan;
   //set maximum time to find a plan
   group_arm_torso.setPlanningTime(5.0);
-  // ros::Duration(5).sleep();
+  ros::Duration(5).sleep();
   bool success = group_arm_torso.plan(my_plan);
   ROS_INFO("Plan found....");
   res.success = success;
@@ -77,7 +77,7 @@ int main(int argc, char **argv)
   ros::init(argc, argv, "cartesian_arm_plan_server");
   ros::NodeHandle n;
   ros::Rate rate(1);
-  ros::AsyncSpinner spinner(1);
+  ros::AsyncSpinner spinner(2);
   spinner.start();
   ros::ServiceServer service = n.advertiseService("cartesian_arm_plan", cartesianPlan);
   ROS_INFO("Ready to plan using trac-ik package in cartesian space.");
