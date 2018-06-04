@@ -220,3 +220,11 @@ add_dependencies(test_cartisen_plan ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin
 target_link_libraries(test_cartisen_plan
   ${catkin_LIBRARIES}
 )
+
+add_executable(visual_ee_traj
+  src/visual_ee_traj.cpp
+)
+add_dependencies(visual_ee_traj ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
+target_link_libraries(visual_ee_traj
+  ${catkin_LIBRARIES}
+)

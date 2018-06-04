@@ -49,7 +49,7 @@ bool cartesianPlan(moveit_plan_service::CartesianArmPlan::Request  &req,
   moveit::planning_interface::MoveGroup::Plan my_plan;
   //set maximum time to find a plan
   group_arm_torso.setPlanningTime(5.0);
-  ros::Duration(5).sleep();
+  ros::Duration(3).sleep();
   bool success = group_arm_torso.plan(my_plan);
   ROS_INFO("Plan found....");
   res.success = success;
